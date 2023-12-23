@@ -1,6 +1,8 @@
 using EstudoMVC.Context;
 using EstudoMVC.Models;
+using EstudoMVC.Repositorio;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
@@ -9,18 +11,34 @@ namespace EstudoMVC.Controllers
     public class HomeController : Controller
     {
 
-        private readonly ApplicationDbContext _context;
+        private readonly IRepositorioFuncionario _repositorioFuncionario;
 
-        public HomeController(ApplicationDbContext context)
+        public HomeController(IRepositorioFuncionario context)
         {
-           _context = context;
+            _repositorioFuncionario = context;
         }
 
         public IActionResult Index()
         {
-            var funcionarios = _context.Funcionarios.Include("Setor").ToList();
+            var funcionarios = _repositorioFuncionario.GetAllFuncionarios();
 
             return View(funcionarios);
+        }
+
+        public IActionResult Criar()
+        {
+            ViewBag.SetorName = _repositorioFuncionario.GetAllSetor();
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Criar(Funcionario funcionario)
+        {
+            ViewBag.SetorName = _repositorioFuncionario.GetAllSetor();
+            _repositorioFuncionario.Adicionar(funcionario);
+
+            return RedirectToAction("Index");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

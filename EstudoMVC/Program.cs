@@ -1,16 +1,22 @@
 using EstudoMVC.Context;
+using EstudoMVC.Repositorio;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConexaoPadrao"));
     options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 });
+
+builder.Services.AddScoped<IRepositorioFuncionario, RepositorioFuncionario>();
+
+
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
