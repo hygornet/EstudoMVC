@@ -18,16 +18,6 @@ namespace EstudoMVC.Controllers
 
         public IActionResult Index()
         {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        public IActionResult Criar()
-        {
             var funcionarios = _context.Funcionarios.Include("Setor").ToList();
 
             return View(funcionarios);
