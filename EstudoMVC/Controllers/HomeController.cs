@@ -1,16 +1,19 @@
+using EstudoMVC.Context;
 using EstudoMVC.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace EstudoMVC.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly ApplicationDbContext _context;
+
+        public HomeController(ApplicationDbContext context)
         {
-            _logger = logger;
+           _context = context;
         }
 
         public IActionResult Index()
@@ -21,6 +24,13 @@ namespace EstudoMVC.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        public IActionResult Criar()
+        {
+            var funcionarios = _context.Funcionarios.Include("Setor").ToList();
+
+            return View(funcionarios);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
