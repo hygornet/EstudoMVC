@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Funcionario>
 
 @{
-    ViewData["Title"] = "Criar";
+    ViewData["Title"] = "Pesquisa de Funcionário";
 }
 
 <h3><center>Listar Funcionários</center></h3>
@@ -9,10 +9,9 @@
     <form asp-action="Search">
         <input name="NomeFuncionario" type="search" placeholder="Digite o nome do funcionário" class="form-control">
         <BR />
-        <input type="submit" value="Pesquisar" class="btn btn-primary" /> 
+        <input type="submit" value="Pesquisar" class="btn btn-primary" /> <a class="btn btn-primary" asp-action="Index">Voltar</a>
     </form>
 </div>
-
 
 <table class="table table-striped">
     <thead>
@@ -23,17 +22,17 @@
         </tr>
     </thead>
     <tbody>
-            @if (Model != null)
+        @if (Model != null)
+        {
+            @foreach (var item in Model)
             {
-                @foreach (var item in Model)
-                {
-                    <tr>
+                <tr>
                     <td>@item.Id</td>
                     <td>@item.NomeFuncionario</td>
                     <td>@item.Setor.NomeSetor</td>
-                    </tr>
-                }
+                </tr>
             }
+        }
     </tbody>
 </table>
 

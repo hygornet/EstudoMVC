@@ -21,7 +21,7 @@ namespace EstudoMVC.Controllers
         public IActionResult Index()
         {
             var funcionarios = _repositorioFuncionario.GetAllFuncionarios();
-
+            
             return View(funcionarios);
         }
 
@@ -39,6 +39,15 @@ namespace EstudoMVC.Controllers
             _repositorioFuncionario.Adicionar(funcionario);
 
             return RedirectToAction("Index");
+        }
+
+        public IActionResult Search(string NomeFuncionario)
+        {
+            ViewBag.SetorName = _repositorioFuncionario.GetAllSetor();
+
+            
+            var funcionarios = _repositorioFuncionario.SearchFuncionario(NomeFuncionario);
+            return View(funcionarios);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

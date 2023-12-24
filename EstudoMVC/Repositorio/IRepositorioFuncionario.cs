@@ -10,5 +10,7 @@ namespace EstudoMVC.Repositorio
         public List<Funcionario> GetAllFuncionarios();
 
         public List<SelectListItem> GetAllSetor();
+
+        public List<Funcionario> SearchFuncionario(string search);
     }
 }

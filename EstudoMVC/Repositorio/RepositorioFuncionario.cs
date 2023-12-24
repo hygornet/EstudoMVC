@@ -28,6 +28,13 @@ namespace EstudoMVC.Repositorio
             return _repositorioFuncionario.Funcionarios.Include("Setor").ToList();
         }
 
+        public List<Funcionario> SearchFuncionario(string search)
+        {
+            var funcionarios = _repositorioFuncionario.Funcionarios.Include("Setor").Where(x=>x.NomeFuncionario.Contains(search)).ToList();
+
+            return funcionarios;
+        }
+
         public List<SelectListItem> GetAllSetor()
         {
             var setor = _repositorioFuncionario.Setor.Select(x => new SelectListItem
